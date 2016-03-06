@@ -3,6 +3,12 @@ body {
   color: #7f8c8d;
 }
 
+/*input[type=submit] {*/
+
+    /*background:url('images/led.png');*/
+
+/*}*/
+
 .numberbox {
     border: 1px solid #c4c4c4;
     height: 25px;

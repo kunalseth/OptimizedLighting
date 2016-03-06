@@ -4,6 +4,40 @@ var h=800;
 var pwr=60;//default is tungsten
 var eff=15;//default is tungsten
 
+$("#bedroom").click(
+    function(){
+        console.log("Bedroom selected");
+        $("#roomselected").text("Bedroom");
+    }
+);
+
+$("#living").click(
+    function(){
+        console.log("Living selected");
+        $("#roomselected").text("Living");
+    }
+);
+
+$("#kitchen").click(
+    function(){
+        console.log("Kitchen selected");
+        $("#roomselected").text("Kitchen");
+    }
+);
+
+$("#bathroom").click(
+    function(){
+        console.log("Bathroom selected");
+        $("#roomselected").text("Bathroom");
+    }
+);
+
+$("#dining").click(
+    function(){
+        console.log("Dining selected");
+        $("#roomselected").text("Dining");
+    }
+);
 
 //initial slider
 $( "#slider1" ).slider({
@@ -15,9 +49,16 @@ $( "#slider1" ).slider({
     max: 120,
     step: 20,
     animate: true,
+    start: function( event, ui ) {
+        pwr=+ui.value;
+        $(ui.handle).find('.ui-slider-tooltip').show();
+    },
+    stop: function( event, ui ) {
+        $(ui.handle).find('.ui-slider-tooltip').hide();
+    },
     slide: function (event, ui) {
-        $(ui.handle).find('.ui-slider-tooltip').text(ui.value);
-        var power=+(ui.value);
+        pwr=+ui.value;
+        $(ui.handle).find('.ui-slider-tooltip').text(ui.value + " Watts");
         console.log(ui.value);
     },
     create: function (event, ui) {
@@ -26,6 +67,7 @@ $( "#slider1" ).slider({
             top: -25,
             left: -10
         });
+        $(event.target).find('.ui-slider-handle').append(tooltip);
     }
 });
 //end of initial slider
@@ -47,10 +89,7 @@ var brd=+(document.getElementById("breadth").value);
 $('input').on('change', function() {
     brd=+(document.getElementById("breadth").value);
 });
-var hgt=+(document.getElementById("height").value);
-$('input').on('change', function() {
-    hgt=+(document.getElementById("height").value);
-});
+
 //End of text box
 
 $( ".bulb" ).change(function()
@@ -71,10 +110,14 @@ $( ".bulb" ).change(function()
             animate: true,
             start: function( event, ui ) {
                 pwr=+ui.value;
+                $(ui.handle).find('.ui-slider-tooltip').show();
+            },
+            stop: function( event, ui ) {
+                $(ui.handle).find('.ui-slider-tooltip').hide();
             },
             slide: function (event, ui) {
                 pwr=+ui.value;
-                $(ui.handle).find('.ui-slider-tooltip').text(ui.value);
+                $(ui.handle).find('.ui-slider-tooltip').text(ui.value+ " Watts");
                 console.log(ui.value);
             },
             create: function (event, ui) {
@@ -83,6 +126,7 @@ $( ".bulb" ).change(function()
                     top: -25,
                     left: -10
                 });
+                $(event.target).find('.ui-slider-handle').append(tooltip);
             }
         });
     }
@@ -94,14 +138,21 @@ $( ".bulb" ).change(function()
 
             orientation: "horizontal",
             range: "min",
-            value: 10,
-            min: 10,
-            max: 50,
-            step: 10,
+            value: 14,
+            min: 14,
+            max: 42,
+            step: 4,
             animate: true,
+            start: function( event, ui ) {
+                pwr=+ui.value;
+                $(ui.handle).find('.ui-slider-tooltip').show();
+            },
+            stop: function( event, ui ) {
+                $(ui.handle).find('.ui-slider-tooltip').hide();
+            },
             slide: function (event, ui) {
                 pwr=+ui.value;
-                $(ui.handle).find('.ui-slider-tooltip').text(ui.value);
+                $(ui.handle).find('.ui-slider-tooltip').text(ui.value+ " CFL Watts");
                 console.log(ui.value);
             },
             create: function (event, ui) {
@@ -110,6 +161,7 @@ $( ".bulb" ).change(function()
                     top: -25,
                     left: -10
                 });
+                $(event.target).find('.ui-slider-handle').append(tooltip);
             }
         });
     }
@@ -123,14 +175,18 @@ $( ".bulb" ).change(function()
             range: "min",
             value: 5,
             min: 5,
-            max: 50,
+            max: 40,
             step: 5,
             animate: true,
             start: function( event, ui ) {
                 pwr=+ui.value;
+                $(ui.handle).find('.ui-slider-tooltip').show();
+            },
+            stop: function( event, ui ) {
+                $(ui.handle).find('.ui-slider-tooltip').hide();
             },
             slide: function (event, ui) {
-                $(ui.handle).find('.ui-slider-tooltip').text(ui.value);
+                $(ui.handle).find('.ui-slider-tooltip').text(ui.value+ " LED Watts");
                 pwr=+ui.value;
                 console.log(ui.value);
             },
@@ -140,6 +196,7 @@ $( ".bulb" ).change(function()
                     top: -25,
                     left: -10
                 });
+                $(event.target).find('.ui-slider-handle').append(tooltip);
             }
         });
     }
@@ -148,8 +205,8 @@ $( ".bulb" ).change(function()
 function calculate()
 {
     var num;
-    var area=len*brd*hgt;
-    num=Math.round((300*area)/(pwr*eff*0.5*0.8));
+    var area=len*brd;
+    num=Math.round((150*area)/(pwr*eff*0.5*0.8));
     console.log(num);
     document.getElementById("demo").innerHTML=num;
     //document.write(num);
