@@ -3,41 +3,144 @@ var w=800;
 var h=800;
 var pwr=60;//default is tungsten
 var eff=15;//default is tungsten
+var n = 0;
+var no_of_bulbs = [];
+var svg, selected_room;
+var width;
+var height;
+var e=200;
+
+
+
+
 
 $("#bedroom").click(
     function(){
+        //$(this).unbind("mouseenter mouseleave");
+        $("#bedroom").fadeTo("fast",1);
+        $("#living").fadeTo("fast",0.2);
+        $("#kitchen").fadeTo("fast",0.2);
+        $("#bathroom").fadeTo("fast",0.2);
+        $("#dining").fadeTo("fast",0.2);
         console.log("Bedroom selected");
         $("#roomselected").text("Bedroom");
+        selected_room = "#bedroom";
+        width = 375;
+        height = 375;
+        e=150;
+
     }
 );
 
 $("#living").click(
     function(){
+        //$(this).unbind("mouseenter mouseleave");
+        $("#living").fadeTo("fast",1);
+        $("#bedroom").fadeTo("fast",0.2);
+        $("#kitchen").fadeTo("fast",0.2);
+        $("#bathroom").fadeTo("fast",0.2);
+        $("#dining").fadeTo("fast",0.2);
         console.log("Living selected");
         $("#roomselected").text("Living");
+        selected_room = "#living";
+        width = 250;
+        height = 250;
+        e=150;
     }
 );
 
 $("#kitchen").click(
     function(){
+        //$(this).unbind("mouseenter mouseleave");
+        $("#kitchen").fadeTo("fast",1);
+        $("#living").fadeTo("fast",0.2);
+        $("#bedroom").fadeTo("fast",0.2);
+        $("#bathroom").fadeTo("fast",0.2);
+        $("#dining").fadeTo("fast",0.2);
         console.log("Kitchen selected");
         $("#roomselected").text("Kitchen");
+        selected_room = "#kitchen";
+        width = 250;
+        height = 250;
+        e=250;
     }
 );
 
 $("#bathroom").click(
     function(){
+        //$(this).unbind("mouseenter mouseleave");
+        $("#bathroom").fadeTo("fast",1);
+        $("#living").fadeTo("fast",0.2);
+        $("#kitchen").fadeTo("fast",0.2);
+        $("#bedroom").fadeTo("fast",0.2);
+        $("#dining").fadeTo("fast",0.2);
         console.log("Bathroom selected");
         $("#roomselected").text("Bathroom");
+        selected_room = "#bathroom";
+        width = 250;
+        height = 250;
+        e=200;
     }
 );
 
+
 $("#dining").click(
     function(){
+        //$(this).unbind("mouseenter mouseleave");
+        $("#dining").fadeTo("fast",1);
+        $("#living").fadeTo("fast",0.2);
+        $("#kitchen").fadeTo("fast",0.2);
+        $("#bathroom").fadeTo("fast",0.2);
+        $("#bedroom").fadeTo("fast",0.2);
         console.log("Dining selected");
         $("#roomselected").text("Dining");
+        selected_room = "#dining";
+        width = 375;
+        height = 375;
+        d3.selectAll("svg").remove();
+        e=150;
     }
 );
+
+//$("#dining").hover(
+//    function() {
+//        $("#dining").fadeTo("fast", 1);
+//    }, function() {
+//        $("#dining").fadeTo("fast", 0.2);
+//    }
+//);
+//
+//$("#bedroom").hover(
+//    function() {
+//        $("#bedroom").fadeTo("fast", 1);
+//    }, function() {
+//        $("#bedroom").fadeTo("fast", 0.2);
+//    }
+//);
+//
+//$("#kitchen").hover(
+//    function() {
+//        $("#kitchen").fadeTo("fast", 1);
+//    }, function() {
+//        $("#kitchen").fadeTo("fast", 0.2);
+//    }
+//);
+//
+//$("#bathroom").hover(
+//    function() {
+//        $("#bathroom").fadeTo("fast", 1);
+//    }, function() {
+//        $("#bathroom").fadeTo("fast", 0.2);
+//    }
+//);
+//
+//$("#living").hover(
+//    function() {
+//        $("#living").fadeTo("fast", 1);
+//    }, function() {
+//        $("#living").fadeTo("fast", 0.2);
+//    }
+//);
 
 //initial slider
 $( "#slider1" ).slider({
@@ -204,12 +307,110 @@ $( ".bulb" ).change(function()
 
 function calculate()
 {
-    var num;
     var area=len*brd;
-    num=Math.round((150*area)/(pwr*eff*0.5*0.8));
-    console.log(num);
-    document.getElementById("demo").innerHTML=num;
-    //document.write(num);
+    n=Math.ceil((e*area)/(pwr*eff*0.5*0.8));
+    console.log(n);
+    document.getElementById("demo").innerHTML=n;
+
+    no_of_bulbs[0] = n;
+
+    d3.selectAll("svg").remove();
+    console.log(selected_room);
+    svg = d3.select(selected_room).selectAll("svg")
+        .data(no_of_bulbs)
+        .enter().append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+        svg.append("g")
+        .attr("transform", "translate(" + [width / 2, height / 2] + ")")
+        .each(function(d) {
+          d3.select(this).call(bulb_placement, primeFactors(d), width / 2);
+        });
+
+        svg = d3.select(selected_room).selectAll("svg")
+        .data(no_of_bulbs)
+        .enter().append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    svg.append("g")
+        .attr("transform", "translate(" + [width / 2, height / 2] + ")")
+        .each(function(d) {
+          d3.select(this).call(bulb_placement, primeFactors(d), width / 2);
+        });
+
 }
 
+
+function bulb_placement(selection, factors, size) {
+    var radialGradient = svg.append("defs")
+        .append("radialGradient")
+        .attr("id", "radial-gradient");
+
+    radialGradient.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "red");
+
+    radialGradient.append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", "#fff");
+
+      if (factors.length) {
+        
+        // Retrieving factors one by one from the prime factorization array
+        var n = factors.pop();
+        
+        //  calculating the adjustment in angle based on the factor 
+        if (n === 4){
+            offset = 45; // 45 degrees will place the 4 bulbs in the 4 corners of a square
+        }
+            else if (n === 2) {
+                offset = 0; // 0 degrees will place the 2 bulbs side by side
+            }
+                else {
+                    offset = -90; // -90 degrees will club the bulbs in the form of a triangle
+                };
+        // Calculating the radius of the circle based on the number of bulbs 
+        radius = n * size / (n + 2);
+        
+        // Displacement in the y coordinate between 2 bulbs in the same cluster
+        dy = n & 1 ? (radius / 2) * (1 - Math.cos(3.14 / n)) : 0;
+
+        // Create empty placeholders for all factors n
+        selection.selectAll("g")
+            .data(d3.range(n))
+            .enter().append("g")
+            .attr("transform", function(d) {
+              var angle = d * 360 / n + offset;
+              return "translate(0," + dy + ")rotate(" + angle + ")translate(" + radius + ")rotate(" + - angle + ")";
+            })
+            .call(bulb_placement, factors, 2 * size / (n + 2));
+      } 
+      // append the bulbs 
+      else selection.append("circle").attr("r", size * 1.5).style("opacity","0.4").style("fill", "url(#radial-gradient)");
+
+}
+
+// Function to calculate the prime factors of the number of bulbs to find the combinations
+function primeFactors(n) {
+  var factors = [],
+      f;
+  while (n > 1) {
+    factors.push(f = factor(n)); // Calling the function for finding the factors
+    n /= f;
+  }
+  return factors;
+}
+
+function factor(n) {
+  // Preserving the combination of 4 bulbs
+  if (n % 4 === 0) return 4;
+
+  for (var i = 2; i <= n / 2; i++) {
+    if (n % i === 0) return i;
+  }
+  
+  return n;
+}
 

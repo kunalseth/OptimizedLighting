@@ -37,8 +37,25 @@ label > input{
 }
 label > input + img{
     cursor:pointer;
-
 }
+
+.submitcss {
+    -webkit-box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+    -moz-box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+    box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+    border-bottom-color:#333;
+    border:1px solid #1f1f1f;
+    background-color: rgba(158, 164, 159, 0.54);
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    color: #767676;
+    font-family:'Verdana',Arial,sans-serif;
+    font-size:14px;
+    text-shadow: #999e9a 0 1px 0;
+    padding:5px
+}
+
 label.ledg1 > input:checked + img{
     content: url('images/led.png');
 
@@ -52,6 +69,10 @@ label.incg1 > input:checked + img{
 label.cflg1 > input:checked + img{
     content: url('images/cfl.png');
 
+}
+
+#dining:hover{
+    background-image: url(images/dining.png);
 }
 
 #incg:hover {
