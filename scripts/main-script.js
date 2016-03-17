@@ -364,7 +364,7 @@ function draw(b,cost,y){
                 .diameter(100)
                 .value(b)
                 .minValue(1)
-                .maxValue(10)
+                .maxValue(9)
                 .render();
 
         var rp2 = radialProgress(document.getElementById('div2'))
@@ -382,7 +382,7 @@ function draw(b,cost,y){
                 .diameter(100)
                 .value(y)
                 .minValue(1)
-                .maxValue(40)
+                .maxValue(30)
                 .render();
 }
 

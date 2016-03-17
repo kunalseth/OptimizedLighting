@@ -3,7 +3,7 @@
  */
 function createBubble() {
     var w = 800;
-    var h = Math.ceil(w * 0.5);
+    var h = 300;
     var oR = 0;
     var nTop = 0;
 

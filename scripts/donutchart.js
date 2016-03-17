@@ -3,24 +3,24 @@
  */
 (function(d3) {
     var dataset = [
-        { label: 'Space Cooling', count: 13 },
-        { label: 'Lighting', count: 11 },
-        { label: 'Water Heating', count: 9 },
-        { label: 'Space Heating', count: 9},
-        { label: 'Refrigeration', count: 7 },
-        { label: 'Television', count: 7 },
-        { label: 'Dryers', count: 4 },
-        { label: 'Furnace Fans', count: 3 },
-        { label: 'Computers', count: 2 },
-        { label: 'Cooking', count: 2 },
-        { label: 'Dishwashers', count: 2 },
-        { label: 'Freezers', count: 2},
-        { label: 'Washers', count: 1 },
-        { label: 'Others', count: 27 }
+        { label: 'Space Cooling (189 Billion KWH/Year)', count: 13 },
+        { label: 'Lighting (150 Billion KWH/Year)', count: 11},
+        { label: 'Water Heating (132 Billion KWH/Year)', count: 9},
+        { label: 'Space Heating (132 Billion KWH/Year)', count: 9},
+        { label: 'Refrigeration (106 Billion KWH/Year)', count: 7},
+        { label: 'Television (96 Billion KWH/Year)', count: 7 },
+        { label: 'Dryers (60 Billion KWH/Year)', count: 4},
+        { label: 'Furnace Fans (43 Billion KWH/Year)', count: 3},
+        { label: 'Computers (34 Billion KWH/Year)', count: 2},
+        { label: 'Cooking (31 Billion KWH/Year)', count: 2},
+        { label: 'Dishwashers (28 Billion KWH/Year)', count: 2},
+        { label: 'Freezers (22 Billion KWH/Year)', count: 2},
+        { label: 'Washers (8 Billion KWH/Year)', count: 1},
+        { label: 'Others (383 Billion KWH/Year)', count: 27}
     ];
 
-    var width = 360;
-    var height = 360;
+    var width = 380;
+    var height = 380;
     var radius = Math.min(width, height) / 2;
     var donutWidth = 30;
 
@@ -50,7 +50,7 @@
         .attr("x", "40")
         .attr("y", "180")
         .text("Energy Consumption")
-        .attr("font-size", 31)
+        .attr("font-size", 32)
         .attr("font-family", "Tahoma")
         .attr("alignment-baseline", "middle")
         .style("fill", "#888888");
@@ -69,7 +69,7 @@
                 .attr("x", "40")
                 .attr("y", "180")
                 .text(function(){return d.data.label + ":" + d.data.count + "%";})
-                .attr("font-size", 29)
+                .attr("font-size", 16)
                 .attr("font-family", "Tahoma")
                 .attr("alignment-baseline", "middle")
                 .style("fill", "#888888")})

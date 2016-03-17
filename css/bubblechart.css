@@ -1,17 +1,17 @@
 #mainBubble {
     background: #fff;
-    /*border: solid 1px #ddd;*/
     box-shadow: 0 0 4px rgba(0,0,0,0);
     font: 10px sans-serif;
-    height: 300px;
     position: relative;
     width: 95%;
+    height: 300px !important;
 }
 
 #mainBubble svg {
     left: 0;
     position: absolute;
     top: 0;
+    height: 300px
 }
 
 #mainBubble circle.topBubble {
